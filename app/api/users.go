@@ -8,10 +8,10 @@ import (
 )
 
 var sample = &models.Users{
-	Id:        "80008h8hui",
-	Firstname: "James",
-	Lastname:  "Gordon",
-	Username:  "jamy54",
+	Id:        "rand",
+	Firstname: "Jammy",
+	Lastname:  "Fox",
+	Username:  "Foxy54",
 	Birthdate: "24/4/1995",
 }
 
@@ -22,7 +22,7 @@ func getUser(w http.ResponseWriter, res *http.Request) {
 		log.Fatalln("Sorry an error occured")
 	}
 	fmt.Println(ss)
-
+	w.Header().Set("payload", ss)
 }
 
 //Creating new users
@@ -40,7 +40,7 @@ func updateUser(w http.ResponseWriter, r *http.Request) {
 
 //Starting route points
 func Routes() {
-	http.HandleFunc("/api/users", getUser)
+	http.HandleFunc("/api/get", getUser)
 	http.HandleFunc("/api/create", createUser)
 	http.HandleFunc("/api/update", updateUser)
 }

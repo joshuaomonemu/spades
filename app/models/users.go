@@ -22,7 +22,7 @@ type Users struct {
 
 //Creating a new User
 func CreateUser(us *Users) string {
-	_, err := client.Doc("userId").Create(ctx, map[string]interface{}{
+	_, err := client.Doc(us.Id).Create(ctx, map[string]interface{}{
 		"firstname": us.Firstname,
 		"lastname":  us.Lastname,
 		"username":  us.Username,
@@ -37,7 +37,7 @@ func CreateUser(us *Users) string {
 }
 
 //Getting a single user by ID
-func ReadUser(id string) []byte {
+func ReadUser(key string) []byte {
 	data, err := client.Doc("alvinv#").Get(ctx)
 	if err != nil {
 		fmt.Println(err)
@@ -45,12 +45,14 @@ func ReadUser(id string) []byte {
 	m := data.Data()
 
 	//Storing Data Stored Respectively
+	id := m["id"].(string)
 	firstname := m["firstname"].(string)
 	lastname := m["lastname"].(string)
 	username := m["username"].(string)
 	birthdate := m["birthdate"].(string)
 
 	payload := &Users{
+		Id:        id,
 		Firstname: firstname,
 		Lastname:  lastname,
 		Username:  username,
