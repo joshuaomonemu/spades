@@ -1,12 +1,16 @@
 package main
 
 import (
-	"app/models"
+	"app/api"
+	"net/http"
 )
 
 func main() {
-	haq := &models.Users{
-		Firstname: "vokes",
-	}
-	models.GetUser(haq)
+
+	//Route points
+	api.Routes()
+
+	//Starting Server and running on port 2020
+	http.ListenAndServe(":2020", nil)
+
 }
