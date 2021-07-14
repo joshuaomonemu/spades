@@ -21,7 +21,7 @@ type Users struct {
 }
 
 //Creating a new User
-func CreateUser(us *Users) string {
+func CreateUser(us *Users) bool {
 	_, err := client.Doc(us.Id).Create(ctx, map[string]interface{}{
 		"firstname": us.Firstname,
 		"lastname":  us.Lastname,
@@ -33,7 +33,7 @@ func CreateUser(us *Users) string {
 		// Handle any errors in an appropriate way, such as returning them.
 		log.Printf("An error has occurred: %s", err)
 	}
-	return "done"
+	return true
 }
 
 //Getting a single user by ID
@@ -66,8 +66,8 @@ func ReadUser(key string) []byte {
 }
 
 //Updating a particular User by ID
-func UpdateUser() {
-	_, err := client.Doc("Falcone").Set(ctx, map[string]interface{}{
+func UpdateUser(key string) bool {
+	_, err := client.Doc(key).Set(ctx, map[string]interface{}{
 		"id":        "Dillidading",
 		"firstname": "Carlus",
 		"username":  "qwerty54",
@@ -76,14 +76,15 @@ func UpdateUser() {
 	if err != nil {
 		log.Printf("An error has occurred: %s", err)
 	}
-
+	return true
 }
 
 //Deleting User Document by ID
-func DeleteUser() {
+func DeleteUser(key string) bool {
 	_, err := client.Doc("Falcone").Delete(ctx)
 	if err != nil {
 		// Handle any errors in an appropriate way, such as returning them.
 		log.Printf("An error has occurred: %s", err)
 	}
+	return true
 }

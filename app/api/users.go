@@ -2,7 +2,6 @@ package api
 
 import (
 	"app/models"
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -21,21 +20,33 @@ func getUser(w http.ResponseWriter, res *http.Request) {
 	if ss == "" {
 		log.Fatalln("Sorry an error occured")
 	}
-	fmt.Println(ss)
 	w.Header().Set("payload", ss)
 }
 
 //Creating new users
 func createUser(w http.ResponseWriter, r *http.Request) {
-	respond := models.CreateUser(sample)
-	if respond == "done" {
-		w.Header().Set("response", respond)
+	response := models.CreateUser(sample)
+	if response {
+		w.Header().Set("Content-type", "application/json")
 	}
 }
 
 //Updating user details
 func updateUser(w http.ResponseWriter, r *http.Request) {
-	models.UpdateUser()
+	key := "Falcone"
+	response := models.UpdateUser(key)
+	if response {
+		w.Header().Set("Content-type", "application/json")
+	}
+}
+
+//Deleting user details
+func deleteUser(w http.ResponseWriter, r *http.Request) {
+	key := "Falcone"
+	response := models.DeleteUser(key)
+	if response {
+		w.Header().Set("Content-type", "application/json")
+	}
 }
 
 //Starting route points
@@ -43,4 +54,5 @@ func Routes() {
 	http.HandleFunc("/api/get", getUser)
 	http.HandleFunc("/api/create", createUser)
 	http.HandleFunc("/api/update", updateUser)
+	http.HandleFunc("/api/delete", deleteUser)
 }
