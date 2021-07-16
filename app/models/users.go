@@ -13,21 +13,19 @@ var ctx = context.Background()
 
 //Users payload Format
 type Users struct {
-	Id        string `json:"id"`
-	Firstname string `json:"firstname"`
-	Lastname  string `json:"lastname"`
-	Username  string `json:"username"`
-	Birthdate string `json:"birthdate"`
+	Id       string `json:"id"`
+	Email    string `json:"email"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 //Creating a new User
 func CreateUser(us *Users) bool {
 	_, err := client.Doc(us.Id).Create(ctx, map[string]interface{}{
-		"firstname": us.Firstname,
-		"lastname":  us.Lastname,
-		"username":  us.Username,
-		"id":        us.Id,
-		"birthdate": us.Birthdate,
+		"email":    us.Email,
+		"username": us.Username,
+		"id":       us.Id,
+		"password": us.Password,
 	})
 	if err != nil {
 		// Handle any errors in an appropriate way, such as returning them.
@@ -38,7 +36,7 @@ func CreateUser(us *Users) bool {
 
 //Getting a single user by ID
 func ReadUser(key string) []byte {
-	data, err := client.Doc("alvinv#").Get(ctx)
+	data, err := client.Doc(key).Get(ctx)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -46,17 +44,15 @@ func ReadUser(key string) []byte {
 
 	//Storing Data Stored Respectively
 	id := m["id"].(string)
-	firstname := m["firstname"].(string)
-	lastname := m["lastname"].(string)
+	email := m["email"].(string)
 	username := m["username"].(string)
-	birthdate := m["birthdate"].(string)
+	password := m["password"].(string)
 
 	payload := &Users{
-		Id:        id,
-		Firstname: firstname,
-		Lastname:  lastname,
-		Username:  username,
-		Birthdate: birthdate,
+		Id:       id,
+		Email:    email,
+		Username: username,
+		Password: password,
 	}
 	bs, err := json.Marshal(payload)
 	if err != nil {

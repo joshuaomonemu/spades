@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+
+    
+<!-- Mirrored from themesbrand.com/chatvia/layouts/auth-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Jul 2021 14:26:30 GMT -->
+<head>
+        
+        <meta charset="utf-8" />
+        <title>Register | Chatvia - Responsive Bootstrap 4 Chat App</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive Bootstrap 4 Chat App" name="description" />
+        <meta content="Themesbrand" name="author" />
+        <!-- App favicon -->
+        <link rel="shortcut icon" href="assets/images/favicon.ico">
+
+        <!-- Bootstrap Css -->
+        <link href="assets/css/bootstrap-dark.min.css" id="bootstrap-dark-style" rel="stylesheet" type="text/css" />
+        <link href="assets/css/bootstrap.min.css" id="bootstrap-style" rel="stylesheet" type="text/css" />
+        <!-- Icons Css -->
+        <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+        <!-- App Css-->
+        <link href="assets/css/app-dark.min.css" id="app-dark-style" rel="stylesheet" type="text/css" />
+        <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    </head>
+
+    <body>
+
+        <div class="account-pages my-5 pt-sm-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-5">
+                        <div class="text-center mb-4">
+                            <a href="index.html" class="auth-logo mb-5 d-block">
+                                <img src="assets/images/logo-dark.png" alt="" height="30" class="logo logo-dark">
+                                <img src="assets/images/logo-light.png" alt="" height="30" class="logo logo-light">
+                            </a>
+
+                            <h4>Sign up</h4>
+                            <p class="text-muted mb-4">Get your Chatvia account now.</p>
+                            
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body p-4">
+                                <div class="p-3">
+                                    <form action="https://themesbrand.com/chatvia/layouts/index.html">
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Email</label>
+                                            <div class="input-group bg-soft-light rounded-3  mb-3">
+                                                <span class="input-group-text text-muted" id="basic-addon5">
+                                                    <i class="ri-mail-line"></i>
+                                                </span>
+                                                <input type="email" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="basic-addon5">
+                                                
+                                            </div>
+                                        </div>
+    
+                                        <div class="mb-3">
+                                            <label class="form-label">Username</label>
+                                            <div class="input-group bg-soft-light mb-3 rounded-3">
+                                                <span class="input-group-text border-light text-muted" id="basic-addon6">
+                                                    <i class="ri-user-2-line"></i>
+                                                </span>
+                                                <input type="text" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Username" aria-label="Enter Username" aria-describedby="basic-addon6">
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="mb-4">
+                                            <label class="form-label">Password</label>
+                                            <div class="input-group bg-soft-light mb-3 rounded-3">
+                                                <span class="input-group-text border-light text-muted" id="basic-addon7">
+                                                    <i class="ri-lock-2-line"></i>
+                                                </span>
+                                                <input type="password" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Password" aria-label="Enter Password" aria-describedby="basic-addon7">
+                                                
+                                            </div>
+                                        </div>
+
+
+                                        <div class="d-grid">
+                                            <button class="btn btn-primary waves-effect waves-light" type="submit">Sign up</button>
+                                        </div>
+
+                                        <div class="mt-4 text-center">
+                                            <p class="text-muted mb-0">By registering you agree to the Chatvia <a href="#" class="text-primary">Terms of Use</a></p>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 text-center">
+                            <p>Already have an account ? <a href="auth-login.html" class="fw-medium text-primary"> Signin </a> </p>
+                            <p>© <script>document.write(new Date().getFullYear())</script> Chatvia. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end account-pages -->
+
+
+
+        <!-- JAVASCRIPT -->
+        <script src="assets/libs/jquery/jquery.min.js"></script>
+        <script src="assets/libs/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/libs/simplebar/simplebar.min.js"></script>
+        <script src="assets/libs/node-waves/waves.min.js"></script>
+
+        <script src="assets/js/app.js"></script>
+        <script>
+            function login(){
+                let xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "./actionpage.php", true);
+    console.log(this.status);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("username=" + username + "&password=" + password);
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let trimmed = this.responseText;
+            let trimmedx = trimmed.trim();
+            //setTimeout(alert(this.responseText), 3000);
+            if (trimmedx == "welcome") {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Signed in successfully'
+                })
+                setTimeout(window.location.href = "main/examples/dashboard.php", 60000);
+            } else {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Error Logging In'
+                })
+            }
+        }
+    }
+            }
+        </script>
+
+    </body>
+
+<!-- Mirrored from themesbrand.com/chatvia/layouts/auth-register.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 16 Jul 2021 14:26:30 GMT -->
+</html>

@@ -1,17 +1,17 @@
 package api
 
 import (
+	"app/handlers"
 	"app/models"
 	"log"
 	"net/http"
 )
 
 var sample = &models.Users{
-	Id:        "rand",
-	Firstname: "Jammy",
-	Lastname:  "Fox",
-	Username:  "Foxy54",
-	Birthdate: "24/4/1995",
+	Id:       "renzov",
+	Email:    "Jammy@yahoo.com",
+	Username: "Foxy15",
+	Password: "24/4/1995",
 }
 
 //Getting a particular user by ID
@@ -51,6 +51,11 @@ func deleteUser(w http.ResponseWriter, r *http.Request) {
 
 //Starting route points
 func Routes() {
+	fs := http.FileServer(http.Dir("./view/assets/"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	http.HandleFunc("/", handlers.Index)
+	http.HandleFunc("/register", handlers.Register)
+	http.HandleFunc("/logout", handlers.Logout)
 	http.HandleFunc("/api/get", getUser)
 	http.HandleFunc("/api/create", createUser)
 	http.HandleFunc("/api/update", updateUser)
