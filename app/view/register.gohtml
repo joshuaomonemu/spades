@@ -54,7 +54,7 @@
                                                 <span class="input-group-text text-muted" id="basic-addon5">
                                                     <i class="ri-mail-line"></i>
                                                 </span>
-                                                <input type="email" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="basic-addon5">
+                                                <input type="email" id="email" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Email" aria-label="Enter Email" aria-describedby="basic-addon5">
                                                 
                                             </div>
                                         </div>
@@ -65,7 +65,7 @@
                                                 <span class="input-group-text border-light text-muted" id="basic-addon6">
                                                     <i class="ri-user-2-line"></i>
                                                 </span>
-                                                <input type="text" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Username" aria-label="Enter Username" aria-describedby="basic-addon6">
+                                                <input type="text" id ="username" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Username" aria-label="Enter Username" aria-describedby="basic-addon6">
                                                 
                                             </div>
                                         </div>
@@ -76,7 +76,7 @@
                                                 <span class="input-group-text border-light text-muted" id="basic-addon7">
                                                     <i class="ri-lock-2-line"></i>
                                                 </span>
-                                                <input type="password" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Password" aria-label="Enter Password" aria-describedby="basic-addon7">
+                                                <input type="password" id="password" class="form-control form-control-lg bg-soft-light border-light" placeholder="Enter Password" aria-label="Enter Password" aria-describedby="basic-addon7">
                                                 
                                             </div>
                                         </div>
@@ -116,17 +116,22 @@
         <script src="assets/js/app.js"></script>
         <script>
             function login(){
-                let xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "./actionpage.php", true);
+    
+    
+    let email = document.getElementById('email').value;
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let xhttp = new XMLHttpRequest();
+    
+    
+    xhttp.open("POST", "/api/create", true);
     console.log(this.status);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("username=" + username + "&password=" + password);
+    xhttp.send("email=" + email + "&username=" + username + "&password=" + password);
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let trimmed = this.responseText;
-            let trimmedx = trimmed.trim();
-            //setTimeout(alert(this.responseText), 3000);
-            if (trimmedx == "welcome") {
+          let rv = xhttp.getResponseHeader("success")
+            if (rv == "true") {
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -143,7 +148,7 @@
                     icon: 'success',
                     title: 'Signed in successfully'
                 })
-                setTimeout(window.location.href = "main/examples/dashboard.php", 60000);
+                setTimeout(window.location.href = "./main", 60000);
             } else {
                 const Toast = Swal.mixin({
                     toast: true,

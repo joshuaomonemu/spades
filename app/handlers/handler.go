@@ -1,10 +1,13 @@
 package handlers
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 )
+
+var req *http.Request
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	tpl, err := template.ParseFiles("view/login.gohtml")
@@ -20,12 +23,23 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 	tpl.Execute(w, nil)
 }
-func Active(w http.ResponseWriter, r *http.Request) {
-	_, err := r.Cookie("user_id")
+
+//Checking if sign in session is active
+func Active() bool {
+	_, err := req.Cookie("user_id")
 	if err != nil {
-		http.Redirect(w, r, "/signin", http.StatusMovedPermanently)
-		return
+		fmt.Println(err)
 	}
+	return true
+}
+
+//Handling the home page
+func Home(w http.ResponseWriter, r *http.Request) {
+	tpl, err := template.ParseFiles("view/main.gohtml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	tpl.Execute(w, nil)
 }
 
 //handle logging out

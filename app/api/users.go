@@ -7,15 +7,18 @@ import (
 	"net/http"
 )
 
+var req *http.Request
+
 var sample = &models.Users{
-	Id:       "renzov",
-	Email:    "Jammy@yahoo.com",
-	Username: "Foxy15",
-	Password: "24/4/1995",
+	Id:       "galninvfi",
+	Email:    req.FormValue("email"),
+	Username: req.FormValue("username"),
+	Password: req.FormValue("password"),
 }
 
 //Getting a particular user by ID
-func getUser(w http.ResponseWriter, res *http.Request) {
+func getUser(w http.ResponseWriter, r *http.Request) {
+
 	ss := string(models.ReadUser(sample.Id))
 	if ss == "" {
 		log.Fatalln("Sorry an error occured")
@@ -25,9 +28,12 @@ func getUser(w http.ResponseWriter, res *http.Request) {
 
 //Creating new users
 func createUser(w http.ResponseWriter, r *http.Request) {
+	if r.Method != "POST" {
+		http.Redirect(w, r, "/index", http.StatusBadRequest)
+	}
 	response := models.CreateUser(sample)
 	if response {
-		w.Header().Set("Content-type", "application/json")
+		w.Header().Set("success", "true")
 	}
 }
 
@@ -54,6 +60,7 @@ func Routes() {
 	fs := http.FileServer(http.Dir("./view/assets/"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	http.HandleFunc("/", handlers.Index)
+	http.HandleFunc("/main", handlers.Home)
 	http.HandleFunc("/register", handlers.Register)
 	http.HandleFunc("/logout", handlers.Logout)
 	http.HandleFunc("/api/get", getUser)
