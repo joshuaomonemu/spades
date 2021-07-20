@@ -6,17 +6,16 @@ import (
 	"net/http"
 )
 
-var req *http.Request
-
-var sample = &models.Users{
-	Id:       "galninvfi",
-	Email:    req.FormValue("email"),
-	Username: req.FormValue("username"),
-	Password: req.FormValue("password"),
-}
-
 //Getting a particular user by ID
 func GetUser(w http.ResponseWriter, r *http.Request) {
+
+	//Form Data
+	sample := &models.Users{
+		Id:       "galninvfi",
+		Email:    r.FormValue("email"),
+		Username: r.FormValue("username"),
+		Password: r.FormValue("password"),
+	}
 
 	ss := string(models.ReadUser(sample.Id))
 	if ss == "" {
@@ -27,6 +26,14 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 //Creating new users
 func CreateUser(w http.ResponseWriter, r *http.Request) {
+
+	//Form Data
+	sample := &models.Users{
+		Email:    r.FormValue("email"),
+		Username: r.FormValue("username"),
+		Password: r.FormValue("password"),
+	}
+
 	if r.Method != "POST" {
 		http.Redirect(w, r, "/index", http.StatusBadRequest)
 	}

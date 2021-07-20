@@ -46,8 +46,6 @@
                         <div class="card">
                             <div class="card-body p-4">
                                 <div class="p-3">
-                                    <form action="https://themesbrand.com/chatvia/layouts/index.html">
-
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
                                             <div class="input-group bg-soft-light rounded-3  mb-3">
@@ -83,20 +81,18 @@
 
 
                                         <div class="d-grid">
-                                            <button class="btn btn-primary waves-effect waves-light" type="submit">Sign up</button>
+                                            <button class="btn btn-primary waves-effect waves-light" type="submit" onclick="login();">Sign up</button>
                                         </div>
 
                                         <div class="mt-4 text-center">
                                             <p class="text-muted mb-0">By registering you agree to the Chatvia <a href="#" class="text-primary">Terms of Use</a></p>
                                         </div>
-                                        
-                                    </form>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-5 text-center">
-                            <p>Already have an account ? <a href="auth-login.html" class="fw-medium text-primary"> Signin </a> </p>
+                            <p>Already have an account ? <a href="/" class="fw-medium text-primary"> Signin </a> </p>
                             <p>© <script>document.write(new Date().getFullYear())</script> Chatvia. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
                         </div>
                     </div>
@@ -116,8 +112,6 @@
         <script src="assets/js/app.js"></script>
         <script>
             function login(){
-    
-    
     let email = document.getElementById('email').value;
     let username = document.getElementById('username').value;
     let password = document.getElementById('password').value;
@@ -148,7 +142,7 @@
                     icon: 'success',
                     title: 'Signed in successfully'
                 })
-                setTimeout(window.location.href = "./main", 60000);
+             setTimeout(window.location.href = "./main", 60000);
             } else {
                 const Toast = Swal.mixin({
                     toast: true,

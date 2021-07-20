@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 )
 
 var client = database.CreateClient().Collection("users")
@@ -21,15 +22,21 @@ type Users struct {
 
 //Creating a new User
 func CreateUser(us *Users) bool {
+	//Creating Random ID for each new user
+	ID := "usd"
+	val := fmt.Sprintln(rand.Intn(200))
+	user_id := ID + val
+	//Creating new user and adding to firestore
 	_, err := client.Doc(us.Id).Create(ctx, map[string]interface{}{
 		"email":    us.Email,
 		"username": us.Username,
-		"id":       us.Id,
+		"id":       user_id,
 		"password": us.Password,
 	})
 	if err != nil {
 		// Handle any errors in an appropriate way, such as returning them.
 		log.Printf("An error has occurred: %s", err)
+		return false
 	}
 	return true
 }
@@ -71,6 +78,7 @@ func UpdateUser(key string) bool {
 	})
 	if err != nil {
 		log.Printf("An error has occurred: %s", err)
+		return false
 	}
 	return true
 }
@@ -81,6 +89,7 @@ func DeleteUser(key string) bool {
 	if err != nil {
 		// Handle any errors in an appropriate way, such as returning them.
 		log.Printf("An error has occurred: %s", err)
+		return false
 	}
 	return true
 }
