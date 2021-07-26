@@ -8,6 +8,7 @@ import (
 
 //Starting route points
 func Routes() {
+
 	fs := http.FileServer(http.Dir("./view/assets/"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	http.HandleFunc("/", handlers.Index)
@@ -18,4 +19,8 @@ func Routes() {
 	http.HandleFunc("/api/create", api.CreateUser)
 	http.HandleFunc("/api/update", api.UpdateUser)
 	http.HandleFunc("/api/delete", api.DeleteUser)
+	http.HandleFunc("/api/friend", api.Newfriend)
+
+	//Starting Server and running on port 2020
+	http.ListenAndServe(":2020", nil)
 }

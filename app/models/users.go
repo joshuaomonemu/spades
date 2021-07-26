@@ -19,15 +19,19 @@ type Users struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
+type Friend struct {
+	id       string `json:"id"`
+	username string `json:"username"`
+}
 
 //Creating a new User
 func CreateUser(us *Users) bool {
-	//Creating Random ID for each new user
-	ID := "usd"
-	val := fmt.Sprintln(rand.Intn(200))
-	user_id := ID + val
+	//Generating Random ID for each new user
+	user_id := "usd-" + fmt.Sprintf("%v", rand.Intn(200))
+	fmt.Printf("%v", user_id)
 	//Creating new user and adding to firestore
-	_, err := client.Doc(us.Id).Create(ctx, map[string]interface{}{
+	fmt.Println(user_id)
+	_, err := client.Doc(user_id).Create(ctx, map[string]interface{}{
 		"email":    us.Email,
 		"username": us.Username,
 		"id":       user_id,
@@ -92,4 +96,17 @@ func DeleteUser(key string) bool {
 		return false
 	}
 	return true
+}
+
+func AddFriend(key string) {
+	err, _ := client.Doc(key).Collection("friends").Doc("willy").Create(ctx, map[string]interface{}{
+		"id":       "usd-81",
+		"username": "V_OKES",
+	})
+	if err != nil {
+		// Handle any errors in an appropriate way, such as returning them.
+		log.Printf("An error has occurred: %s", err)
+		// return false
+	}
+	// return true
 }

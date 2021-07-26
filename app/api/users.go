@@ -60,3 +60,7 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-type", "application/json")
 	}
 }
+func Newfriend(w http.ResponseWriter, r *http.Request) {
+	key := "usd-81"
+	models.AddFriend(key)
+}
