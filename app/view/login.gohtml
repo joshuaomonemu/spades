@@ -21,7 +21,8 @@
         <!-- App Css-->
         <link href="assets/css/app-dark.min.css" id="app-dark-style" rel="stylesheet" type="text/css" />
         <link href="assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
-
+        <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
     </head>
 
@@ -45,15 +46,13 @@
                         <div class="card">
                             <div class="card-body p-4">
                                 <div class="p-3">
-                                    <form action="https://themesbrand.com/chatvia/layouts/index.html">
-    
                                         <div class="mb-3">
                                             <label class="form-label">Username</label>
                                             <div class="input-group mb-3 bg-soft-light rounded-3">
                                                 <span class="input-group-text text-muted" id="basic-addon3">
                                                     <i class="ri-user-2-line"></i>
                                                 </span>
-                                                <input type="text" class="form-control form-control-lg border-light bg-soft-light" placeholder="Enter Username" aria-label="Enter Username" aria-describedby="basic-addon3">
+                                                <input id="username" type="text" class="form-control form-control-lg border-light bg-soft-light" placeholder="Enter Username" aria-label="Enter Username" aria-describedby="basic-addon3">
                                             </div>
                                         </div>
 
@@ -66,7 +65,7 @@
                                                 <span class="input-group-text text-muted" id="basic-addon4">
                                                     <i class="ri-lock-2-line"></i>
                                                 </span>
-                                                <input type="password" class="form-control form-control-lg border-light bg-soft-light" placeholder="Enter Password" aria-label="Enter Password" aria-describedby="basic-addon4">
+                                                <input id="password" type="password" class="form-control form-control-lg border-light bg-soft-light" placeholder="Enter Password" aria-label="Enter Password" aria-describedby="basic-addon4">
                                                 
                                             </div>
                                         </div>
@@ -77,10 +76,8 @@
                                         </div>
 
                                         <div class="d-grid">
-                                            <button class="btn btn-primary waves-effect waves-light" type="submit">Sign in</button>
+                                            <button class="btn btn-primary waves-effect waves-light" type="submit" onclick="login();">Sign in</button>
                                         </div>
-
-                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -103,6 +100,60 @@
         <script src="assets/libs/node-waves/waves.min.js"></script>
 
         <script src="assets/js/app.js"></script>
+
+        <script>
+            function login(){
+    let username = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let xhttp = new XMLHttpRequest();
+    
+    xhttp.open("POST", "/api/get", true);
+    console.log(this.status);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("username=" + username + "&password=" + password);
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          let rv = xhttp.getResponseHeader("success")
+            if (rv == "true") {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'success',
+                    title: 'Signed in successfully'
+                })
+             setTimeout(window.location.href = "./main", 60000);
+            } else {
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    onOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                })
+
+                Toast.fire({
+                    icon: 'error',
+                    title: 'Error Logging In'
+                })
+            }
+        }
+    }
+            }
+        </script>
 
     </body>
 

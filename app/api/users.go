@@ -2,7 +2,6 @@ package api
 
 import (
 	"app/models"
-	"log"
 	"net/http"
 )
 
@@ -11,17 +10,18 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 
 	//Form Data
 	sample := &models.Users{
-		Id:       "galninvfi",
 		Email:    r.FormValue("email"),
 		Username: r.FormValue("username"),
 		Password: r.FormValue("password"),
 	}
 
-	ss := string(models.ReadUser(sample.Id))
-	if ss == "" {
-		log.Fatalln("Sorry an error occured")
+	ss := string(models.ReadUser(sample.Username, sample.Password))
+	if ss == "error" {
+		w.Header().Set("success", "false")
+	} else {
+		w.Header().Set("success", "true")
+		//w.Header().Set("payload", ss)
 	}
-	w.Header().Set("payload", ss)
 }
 
 //Creating new users
@@ -62,5 +62,6 @@ func DeleteUser(w http.ResponseWriter, r *http.Request) {
 }
 func Newfriend(w http.ResponseWriter, r *http.Request) {
 	key := "usd-81"
-	models.AddFriend(key)
+	username := "nana"
+	models.AddFriend(key, username)
 }

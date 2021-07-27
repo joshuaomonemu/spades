@@ -26,15 +26,10 @@ type Friend struct {
 
 //Creating a new User
 func CreateUser(us *Users) bool {
-	//Generating Random ID for each new user
-	user_id := "usd-" + fmt.Sprintf("%v", rand.Intn(200))
-	fmt.Printf("%v", user_id)
-	//Creating new user and adding to firestore
-	fmt.Println(user_id)
-	_, err := client.Doc(user_id).Create(ctx, map[string]interface{}{
+	_, err := client.Doc(us.Username).Create(ctx, map[string]interface{}{
 		"email":    us.Email,
 		"username": us.Username,
-		"id":       user_id,
+		"id":       us.Username + fmt.Sprintf("%v", (rand.Intn(999))),
 		"password": us.Password,
 	})
 	if err != nil {
@@ -46,7 +41,7 @@ func CreateUser(us *Users) bool {
 }
 
 //Getting a single user by ID
-func ReadUser(key string) []byte {
+func ReadUser(key, pass string) []byte {
 	data, err := client.Doc(key).Get(ctx)
 	if err != nil {
 		fmt.Println(err)
@@ -58,6 +53,11 @@ func ReadUser(key string) []byte {
 	email := m["email"].(string)
 	username := m["username"].(string)
 	password := m["password"].(string)
+
+	if key != username || pass != password {
+		val := []byte("error")
+		return val
+	}
 
 	payload := &Users{
 		Id:       id,
@@ -98,8 +98,8 @@ func DeleteUser(key string) bool {
 	return true
 }
 
-func AddFriend(key string) {
-	err, _ := client.Doc(key).Collection("friends").Doc("willy").Create(ctx, map[string]interface{}{
+func AddFriend(key, username string) {
+	err, _ := client.Doc(key).Collection("friends").Doc(username).Create(ctx, map[string]interface{}{
 		"id":       "usd-81",
 		"username": "V_OKES",
 	})
