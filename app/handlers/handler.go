@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"app/models"
 	"fmt"
 	"html/template"
 	"log"
@@ -9,14 +10,14 @@ import (
 
 var req *http.Request
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, _ *http.Request) {
 	tpl, err := template.ParseFiles("view/login.gohtml")
 	if err != nil {
 		log.Fatal(err)
 	}
 	tpl.Execute(w, nil)
 }
-func Register(w http.ResponseWriter, r *http.Request) {
+func Register(w http.ResponseWriter, _ *http.Request) {
 	tpl, err := template.ParseFiles("view/register.gohtml")
 	if err != nil {
 		log.Fatal(err)
@@ -34,12 +35,26 @@ func Active() bool {
 }
 
 //Handling the home page
-func Home(w http.ResponseWriter, r *http.Request) {
+func Home(w http.ResponseWriter, _ *http.Request) {
+	//Getting freindlist from models
+	slicer := models.FriendList()
+
 	tpl, err := template.ParseFiles("view/main.gohtml")
 	if err != nil {
 		log.Fatal(err)
 	}
-	tpl.Execute(w, nil)
+	tpl.Execute(w, slicer)
+}
+
+func Tester(w http.ResponseWriter, _ *http.Request) {
+	//Getting freindlist from models
+	slicer := models.FriendList()
+
+	tpl, err := template.ParseFiles("view/test.gohtml")
+	if err != nil {
+		log.Fatal(err)
+	}
+	tpl.Execute(w, slicer)
 }
 
 //handle logging out

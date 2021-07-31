@@ -7,6 +7,8 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+
+	"google.golang.org/api/iterator"
 )
 
 var client = database.CreateClient().Collection("users")
@@ -22,6 +24,9 @@ type Users struct {
 type Friend struct {
 	id       string `json:"id"`
 	username string `json:"username"`
+}
+type Info struct {
+	FriendList []string
 }
 
 //Creating a new User
@@ -44,7 +49,8 @@ func CreateUser(us *Users) bool {
 func ReadUser(key, pass string) []byte {
 	data, err := client.Doc(key).Get(ctx)
 	if err != nil {
-		fmt.Println(err)
+		val := []byte("error")
+		return val
 	}
 	m := data.Data()
 
@@ -109,4 +115,28 @@ func AddFriend(key, username string) {
 		// return false
 	}
 	// return true
+}
+
+func FriendList() []string {
+	c := &Info{
+		FriendList: []string{},
+	}
+	var lis string
+	var usd []string
+	iter := client.Documents(ctx)
+	for {
+		doc, err := iter.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			fmt.Println(err)
+		}
+		m := doc.Data()
+		lis = m["username"].(string)
+
+		c.FriendList = append(c.FriendList, lis)
+		usd = c.FriendList
+	}
+	return usd
 }

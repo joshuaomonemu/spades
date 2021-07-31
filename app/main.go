@@ -5,8 +5,6 @@ import (
 )
 
 func main() {
-
 	//Route points
 	routes.Routes()
-
 }
