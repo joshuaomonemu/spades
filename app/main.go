@@ -1,10 +1,9 @@
 package main
 
-import (
-	"app/routes"
-)
+import "app/routes"
 
 func main() {
 	//Route points
 	routes.Routes()
+
 }

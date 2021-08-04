@@ -2,6 +2,7 @@ package api
 
 import (
 	"app/models"
+	"fmt"
 	"net/http"
 )
 
@@ -19,19 +20,27 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	if ss == "error" {
 		w.Header().Set("success", "false")
 	} else {
-		w.Header().Set("success", "true")
-		//w.Header().Set("payload", ss)
+		//Setting sessions
+		cook := sample.Username
+		http.SetCookie(w, &http.Cookie{
+			Name:  "user_id",
+			Value: cook,
+		})
+		fmt.Println(cook)
+		//w.Header().Set("success", "true")
+
 	}
 }
 
 //Creating new users
 func CreateUser(w http.ResponseWriter, r *http.Request) {
-
+	chats := []string{" "}
 	//Form Data
 	sample := &models.Users{
 		Email:    r.FormValue("email"),
 		Username: r.FormValue("username"),
 		Password: r.FormValue("password"),
+		Messages: chats,
 	}
 
 	if r.Method != "POST" {
@@ -40,6 +49,12 @@ func CreateUser(w http.ResponseWriter, r *http.Request) {
 	response := models.CreateUser(sample)
 	if response {
 		w.Header().Set("success", "true")
+		//Setting cookies for sessions
+		c := &http.Cookie{
+			Name:  "user_id",
+			Value: sample.Username,
+		}
+		http.SetCookie(w, c)
 	}
 }
 

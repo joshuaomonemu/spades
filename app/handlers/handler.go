@@ -35,10 +35,10 @@ func Active() bool {
 }
 
 //Handling the home page
-func Home(w http.ResponseWriter, _ *http.Request) {
+func Home(w http.ResponseWriter, r *http.Request) {
 	//Getting freindlist from models
 	slicer := models.FriendList()
-
+	fmt.Println(slicer)
 	tpl, err := template.ParseFiles("view/main.gohtml")
 	if err != nil {
 		log.Fatal(err)

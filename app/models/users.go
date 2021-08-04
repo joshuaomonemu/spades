@@ -16,15 +16,17 @@ var ctx = context.Background()
 
 //Users payload Format
 type Users struct {
-	Id       string `json:"id"`
-	Email    string `json:"email"`
-	Username string `json:"username"`
-	Password string `json:"password"`
+	Id       string   `json:"id"`
+	Email    string   `json:"email"`
+	Username string   `json:"username"`
+	Password string   `json:"password"`
+	Messages []string `json:"messages"`
 }
-type Friend struct {
-	id       string `json:"id"`
-	username string `json:"username"`
-}
+
+// type Friend struct {
+// 	id       string `json:"id"`
+// 	username string `json:"username"`
+// }
 type Info struct {
 	FriendList []string
 }
@@ -36,6 +38,7 @@ func CreateUser(us *Users) bool {
 		"username": us.Username,
 		"id":       us.Username + fmt.Sprintf("%v", (rand.Intn(999))),
 		"password": us.Password,
+		"messages": us.Messages,
 	})
 	if err != nil {
 		// Handle any errors in an appropriate way, such as returning them.
@@ -139,4 +142,17 @@ func FriendList() []string {
 		usd = c.FriendList
 	}
 	return usd
+}
+func GetMessage(key string) []string {
+
+	data, err := client.Doc(key).Get(ctx)
+	if err != nil {
+		val := ("error")
+		fmt.Println(val)
+	}
+	v := Users{}
+	data.DataTo(&v)
+
+	//Storing Data Stored Respectively
+	return v.Messages
 }

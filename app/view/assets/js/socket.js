@@ -9,7 +9,6 @@ console.log("Attempting connection");
 socket.onopen = () => {
     console.log("Successfully connected");
     document.getElementById('status').innerHTML = "Online";
-    socket.send("Hi from client")
 }
 socket.onclose = (event) => {
     console.log("Socket closed: ", event)
@@ -41,19 +40,31 @@ function getCookie(cname) {
 }
 
 function help() {
-    let content = document.getElementById("msg").value;
+    let message = document.getElementById("msg").value;
     let userId = getCookie("user_id");
     let msgContainer = document.querySelector("#msg-container");
     let date = Date.now();
     let time = new Date(date).toLocaleTimeString();
-    console.log(time);
-    let reps = {
-        content,
-        userId: getCookie("user_id"),
-        time
+    let id = function makeid(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+       }
+       return result;
     }
-    rep = JSON.stringify(reps)
-    console.log(rep);
+    // console.log(time);
+    let container = {
+        "messageId": `msg-${id(5)}`,
+        "content": message,
+        "type": "text",
+        "userId": "marypoppins",
+        "time": time,
+        "recieverId": "life_21"
+    };
+    console.log(container)
+
 
     let template = `<div class="conversation-list">
                         <div class="chat-avatar">
@@ -64,7 +75,7 @@ function help() {
                             <div class="ctext-wrap">
                                 <div class="ctext-wrap-content">
                                     <p class="mb-0">
-                                        ${content}
+                                        ${message}
                                     </p>
                                     <p class="chat-time mb-0"><i class="ri-time-line align-middle"></i> <span class="align-middle">${time}</span></p>
                                 </div>
@@ -90,6 +101,8 @@ function help() {
     msg.classList.add("right");
     msg.innerHTML = template;
 
-    msgContainer.append(msg)
-    socket.send(JSON.stringify(rep))
+    msgContainer.append(msg);
+    
+    console.log(container);
+    socket.send(JSON.stringify(container));
 }

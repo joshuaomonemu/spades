@@ -1,6 +1,7 @@
 package util
 
 import (
+	"app/models"
 	"fmt"
 	"log"
 	"net/http"
@@ -12,11 +13,6 @@ import (
 var upgrader = websocket.Upgrader{
 	ReadBufferSize:  1024,
 	WriteBufferSize: 1024,
-}
-
-//Struct for messages
-type msg struct {
-	rep string
 }
 
 func WsEndpoint(w http.ResponseWriter, r *http.Request) {
@@ -32,30 +28,10 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 }
 
 func reader(conn *websocket.Conn) {
+	v := models.Messages{}
 	for {
-		messageType, p, err := conn.ReadMessage()
-		if err != nil {
-			log.Println(err)
-			return
-		}
-		log.Println(string(p))
-
-		if err := conn.WriteMessage(messageType, p); err != nil {
-			log.Println(err)
-			return
-		}
-
-		v := msg{}
-		m := v.rep
-		err = conn.ReadJSON(&m)
-		if err != nil {
-			fmt.Println("Error reading json.", err)
-		}
-
-		//fmt.Printf("Got message: %#v\n", m)
-		fmt.Println(m)
-		if err = conn.WriteJSON(m); err != nil {
-			fmt.Println(err)
-		}
+		conn.ReadJSON(&v)
+		models.CreateMsg(&v)
+		fmt.Println(v)
 	}
 }
