@@ -2,7 +2,6 @@ package api
 
 import (
 	"app/models"
-	"fmt"
 	"net/http"
 )
 
@@ -21,14 +20,7 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("success", "false")
 	} else {
 		//Setting sessions
-		cook := sample.Username
-		http.SetCookie(w, &http.Cookie{
-			Name:  "user_id",
-			Value: cook,
-		})
-		fmt.Println(cook)
-		//w.Header().Set("success", "true")
-
+		w.Header().Set("success", "true")
 	}
 }
 

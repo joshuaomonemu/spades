@@ -1,9 +1,15 @@
 package main
 
-import "app/routes"
+import (
+	"app/models"
+	"app/routes"
+	"fmt"
+)
 
 func main() {
 	//Route points
-	routes.Routes()
 
+	vamp := models.ReadMsg("life_21", "marypoppins")
+	fmt.Println(vamp)
+	routes.Routes()
 }

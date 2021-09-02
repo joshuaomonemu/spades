@@ -8,6 +8,7 @@ import (
 )
 
 var msgClient = database.CreateClient().Collection("messages")
+var details []string
 
 //Messages payload Format
 type Messages struct {
@@ -70,3 +71,26 @@ func DeleteMsg(key string) bool {
 func UpdateMsg() {
 
 }
+
+func ReadMsg(user1, user2 string) []string {
+	vall := GetMessage(user1)
+	val2 := GetMessage(user2)
+	val := append(val2, vall...)
+	for i, element := range val {
+		for j, element2 := range val {
+			if element == element2 && j > i {
+				details = append(details, element)
+			}
+			for _, message := range details {
+
+			}
+		}
+	}
+	return details
+}
+
+// func MsgReader() {
+// 	for _, v := range details {
+
+// 	}
+// }
