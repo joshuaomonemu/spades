@@ -8,8 +8,7 @@ import (
 
 func main() {
 	//Route points
-
-	vamp := models.ReadMsg("life_21", "marypoppins")
+	vamp := models.Readmsgcontent()
 	fmt.Println(vamp)
 	routes.Routes()
 }
