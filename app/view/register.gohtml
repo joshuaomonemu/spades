@@ -117,7 +117,7 @@
     let xhttp = new XMLHttpRequest();
     
     
-    xhttp.open("POST", "/api/create", true);
+    xhttp.open("POST", "/api/user/create", true);
     console.log(this.status);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("email=" + email + "&username=" + username + "&password=" + password);

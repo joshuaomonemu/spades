@@ -104,7 +104,7 @@
     let password = document.getElementById('password').value;
     let xhttp = new XMLHttpRequest();
     
-    xhttp.open("POST", "/api/get", true);
+    xhttp.open("POST", "/api/user/get", true);
     console.log(this.status);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     xhttp.send("username=" + username + "&password=" + password);

@@ -12,7 +12,7 @@ import (
 func CreateClient() *firestore.Client {
 	// Use a service account
 	ctx := context.Background()
-	sa := option.WithCredentialsFile("./.config/firekey.json")
+	sa := option.WithCredentialsFile("../.config/firekey.json")
 	app, err := firebase.NewApp(ctx, nil, sa)
 	if err != nil {
 		log.Fatalln(err)

@@ -3,12 +3,14 @@ package models
 import (
 	"app/database"
 	"log"
+	"os"
 
 	firestore "cloud.google.com/go/firestore"
 )
 
 var msgClient = database.CreateClient().Collection("messages")
 var details []string
+var cont []string
 
 //Messages payload Format
 type Messages struct {
@@ -68,10 +70,22 @@ func DeleteMsg(key string) bool {
 	return true
 }
 
-func UpdateMsg() {
+// func UpdateMsg() {
 
+// }
+func Readmsgcontent() []string {
+	vamp := ReadMsg("life_21", "marypoppins")
+	for _, msg := range vamp {
+		data, err := msgClient.Doc(msg).Get(ctx)
+		if err != nil {
+			os.Exit(2)
+		}
+		m := data.Data()
+		content := m["content"].(string)
+		cont = append(cont, content)
+	}
+	return cont
 }
-
 func ReadMsg(user1, user2 string) []string {
 	vall := GetMessage(user1)
 	val2 := GetMessage(user2)
@@ -81,9 +95,7 @@ func ReadMsg(user1, user2 string) []string {
 			if element == element2 && j > i {
 				details = append(details, element)
 			}
-			for _, message := range details {
 
-			}
 		}
 	}
 	return details

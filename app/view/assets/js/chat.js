@@ -4,7 +4,8 @@ function getMessage() {
 
 function loadMessages() {
 
-    let messages = localStorage.getItem("messages");
+    let messages = typeof(JSON.parse(localStorage.getItem("messages"))) === 'object' && JSON.parse(localStorage.getItem("message")) instanceof Array ? JSON.parse(localStorage.getItem("messages")) : [];
+
     messages.forEach(message => {
         let loadmessage = fetch(`/api/chat/${message}`,{
             method: "GET",
