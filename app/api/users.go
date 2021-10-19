@@ -21,6 +21,11 @@ func GetUser(w http.ResponseWriter, r *http.Request) {
 	} else {
 		//Setting sessions
 		w.Header().Set("success", "true")
+		c := &http.Cookie{
+			Name:  "user_id",
+			Value: sample.Username,
+		}
+		http.SetCookie(w, c)
 	}
 }
 

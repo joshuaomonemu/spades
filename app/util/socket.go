@@ -1,8 +1,6 @@
 package util
 
 import (
-	"app/models"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -28,10 +26,10 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 }
 
 func reader(conn *websocket.Conn) {
-	v := models.Messages{}
-	for {
-		conn.ReadJSON(&v)
-		models.CreateMsg(&v)
-		fmt.Println(v)
-	}
+	// v := models.Messages{}
+	// for {
+	// 	conn.ReadJSON(&v)
+	// 	models.CreateMsg(&v)
+	// 	fmt.Println(v)
+	// }
 }
