@@ -5,6 +5,7 @@ import (
 )
 
 func main() {
-	//Route points
+	//Routing points for each page
+	
 	routes.Routes()
 }
